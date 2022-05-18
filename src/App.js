@@ -1,23 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
+import About from "./Pages/About/About";
+import Appointment from "./Pages/Appointment/Appointment";
+import Dashboard from "./Pages/Dashboard/Dashboard";
+import MyAppointments from "./Pages/Dashboard/MyAppointments";
+import MyHistory from "./Pages/Dashboard/MyHistory";
+import MyReview from "./Pages/Dashboard/MyReview";
+import Home from "./Pages/Home/Home";
+import Login from "./Pages/Login/Login";
+import RequireAuth from "./Pages/Login/RequireAuth";
+import SignUp from "./Pages/Login/SignUp";
+import Navbar from "./Pages/Shared/Navbar";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div className="max-w-7xl mx-auto">
+      <Navbar></Navbar>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/appointment"
+          element={
+            <RequireAuth>
+              <Appointment />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <RequireAuth>
+              <Dashboard />
+            </RequireAuth>
+          }
         >
-          Learn React
-        </a>
-      </header>
+          <Route index element={<MyAppointments />}></Route>
+          <Route path="review" element={<MyReview />}></Route>
+          <Route path="history" element={<MyHistory />}></Route>
+        </Route>
+        <Route path="/about" element={<About />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/sign_up" element={<SignUp />} />
+      </Routes>
+      <ToastContainer />
     </div>
   );
 }
