@@ -19,16 +19,14 @@ const MyAppointments = () => {
       })
         .then((res) => {
           console.log("res", res);
-          // if (res.status === 401 || res.status === 403) {
-          //   signOut(auth);
-          //   localStorage.removeItem("accessToken");
-          //   navigate("/");
-          // }
+          if (res.status === 401 || res.status === 403) {
+            signOut(auth);
+            localStorage.removeItem("accessToken");
+            navigate("/");
+          }
           return res.json();
         })
-        .then((data) => {
-          setAppointments(data);
-        });
+        .then((data) => setAppointments(data));
     }
   }, [user]);
 
